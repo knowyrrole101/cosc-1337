@@ -1,0 +1,4 @@
+From Terminal
+g++ --version
+
+g++ test.cpp -o test
