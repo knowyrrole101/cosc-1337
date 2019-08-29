@@ -1,0 +1,22 @@
+# Chapter 2 Notes     
+
+1. Preprocessor directive - e.g #include <iostream> - Sets up source code for compiler. (header file)
+    * Called a header file because it starts at top of program and includes brackets.
+    * Iostream allows input/ouput to screen and read input from keyboard.
+2. Namespace - e.g using namespace std; in order to access std to use the entities in iostream it must have access to std namespace.
+3. Functions - e.g int main(){} - int represents indicates function sends integer value back to operating system when it is finished executing. 
+    * return 0; usually indicates the program completed successfully
+4. Print - cout Classified as a stream object. << sends string to cout. Stream insertion operator. 
+    * cout << "hello world" << endl; or \n for newlines
+    * literals - piece of data written directly into a programs code. (e.g. int apples; apples 20; cout << "There are " << apples << "apples! \n")
+5. Reserved Identifiers/Key Words in C++:
+    *alignas, alignof, and, and_eq, int, long, mutable, namespace, tempalte, this, or, false, break, bool, bitand, auto, asm, case, catch, char, char16_t, char32_t
+6. Integer Data Types:
+    * short int - 2 bytes range: -32k to 32k
+    * unsigned short int - 2 bytes range: 0 to 65k
+    * int - 4 bytes - -2Billion to +2 bilion
+    * unsigned int - 4 bytes - 0 to +4billion
+    * long int - 4 bytes
+    * unsigned long int - 4 bytes
+    * long long int - 8 bytes
+    * unsigned long long int - 8 bytes
