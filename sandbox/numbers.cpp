@@ -1,3 +1,4 @@
+// Needed for cin and cout
 #include <iostream>
 // Not technically needed. file still compiles.
 #include <string>
@@ -67,11 +68,16 @@ int main() {
     int total = 4 + 8;
     int leftOver = 26 % 3;
 
+    // cout == console output object
     cout << "Modolus?? " << leftOver << "\n";
     /*
         Multi line comments
         in C++
     */
+
+    // cin == console input object
+
+
 
     return 0;
 }
