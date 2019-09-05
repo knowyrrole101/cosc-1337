@@ -3,7 +3,11 @@
 #include <cmath>
 
 using namespace std;
+   int books,
+        months;
+    double booksPerMonth;
 
+    cout << "How "
 int main() {
 
     int length, width, area;
@@ -64,6 +68,7 @@ int main() {
         // long int
         // unsigned int
         // int
+
 
     return 0;
 }

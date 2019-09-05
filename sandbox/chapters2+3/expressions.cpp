@@ -28,6 +28,27 @@ int main () {
     int myNumber = 101;
     int newNumber = myNumber + 99;
 
+    int begInv,
+        sold,
+        store1,
+        store2;
+
+    cout << "What was beginning inventory!!";
+    cin >> begInv;
+    
+    store1 = store2 = begInv;
+    cout << "how many items sold store 1";
+    cin >> sold;
+
+    store1 -= sold;
+    
+    cout << "how many items sold store 2";
+    cin >> sold;
+
+    store2 -= sold;
+
+    cout << "Store 1" << store1 << "and Store 2" << store2 << endl;
+
 
     return 0;
 }
