@@ -2,7 +2,7 @@
 // Integer Storage program
 // Programmer: Mamun Ahmed
 // Completed : 09/07/2019
-// Status    : 
+// Status    : Completed
 //
 // This program reads in user values and calculates values based off
 // them. Including sum, product, integer quotient, integer remainder,
