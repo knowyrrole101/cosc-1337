@@ -44,7 +44,7 @@ int main() {
     hours = hours < MIN_HOURS ? MIN_HOURS : hours; 
 
     charges = PAY_RATE * hours;
-    cout << fixed << showpoint << setprecision(2)
+    
          << "The charges are $" << charges << endl;
     
     char choice; 
