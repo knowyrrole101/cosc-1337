@@ -9,6 +9,10 @@ void displayMessage(string message);
 void acceptNumbers(int someNum);
 int returnAValue(int someNum);
 double getRadius();
+bool bigBool();
+void showStatic();
+void defaultArguments(int num=10, string name="Moon");
+void refVars(int &someBigInt);
 
 int main() {
     displayMessage("This is the message passed in!");
@@ -17,7 +21,18 @@ int main() {
     cout << someNum << endl;
     double radius = getRadius();
     cout << "Radius: " << radius << endl;
+    bool whatIsIt = bigBool();
+    cout << whatIsIt << endl;
+    // system("clear");
+    for (int count=0; count<5; count++) {
+        showStatic();
+    }
+    defaultArguments();
+    int someBigInt = 13; 
+    refVars(someBigInt);
+    
     return 0;
+
 };
 
 void displayMessage(string message) {
@@ -41,3 +56,29 @@ double getRadius(){
     double radius = 2.45;
     return PI * radius;
 };
+
+bool bigBool() {
+    return false;
+};
+
+// *********STATIC VARIABLES**************
+// Static Variables can hold local variables between function calls
+void showStatic() {
+    static int numCalls = 0; // Static local variable
+    cout << "This function has been called " << ++numCalls << " times." << endl;
+};
+
+void defaultArguments(int num, string name){
+   cout << num << endl;
+   cout << "My name is " << name << endl;
+};
+
+//**********Reference Variables***********
+// Reference variables are defined liked regular vars
+// but that have an ampersand
+
+void refVars(int &someBigInt){
+    someBigInt++;
+    cout << someBigInt << endl;
+};
+
