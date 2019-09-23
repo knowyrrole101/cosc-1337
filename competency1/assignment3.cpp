@@ -4,10 +4,12 @@
 // Completed : 09/21/2019
 // Status    : Completed
 //
-// 
-// 
-// 
-// 
+// Fully functioning bank account program that has a number of pieces
+// from module 2 abstracted into functions.
+// The program allows users to enter in any starting balance, has 
+// input validation for 1st and 2nd character inputs
+// and it allows users to cash checks, deposit money, and charges
+// the appropriate service charges based on transactions and balances.
 //******************************************************************
 
 #include <iostream> // Handle input/output 
