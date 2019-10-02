@@ -17,7 +17,7 @@ void Robot::setRPM(double newRPM)
     {
         cout << "Setting New RPM" << endl;
         rpm = newRPM;
-    }; 
+    }
 }
 
 // Setter Function To Set New Diameter Value
