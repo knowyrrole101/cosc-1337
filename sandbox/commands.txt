@@ -1,4 +1,7 @@
 From Terminal
-g++ --version
 
+g++ --version 
+{% comment %} C++ {% endcomment %}
 g++ test.cpp -o test
+{% comment %} C++ 11 {% endcomment %}
+g++ arrays_vectors.cpp --std=c++11 
