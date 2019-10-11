@@ -4,6 +4,12 @@
 
 using namespace std;
 
+
+typedef int arrayType[];
+// Function Prototype
+// void showValue(int intArray[], int arraySize);
+void showValue(arrayType someArray, int size);
+
 int main() {
     
     // Arrays and Vectors
@@ -109,10 +115,112 @@ int main() {
     // Copying arrays. Must be done by using loop
     int someArray1[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int someArrayCopy[10];
+
     for(int index=0; index<10; index++){
         someArrayCopy[index] = someArray1[index];
         cout << someArrayCopy[index] << endl;
     }
 
+    // Comparing Arrays
+    const int SIZE = 5;
+    int arrayA[SIZE] = {3, 2, 1, 5, 4};
+    int arrayB[SIZE] = {1, 2, 3, 2, 5};
+    bool arraysAreEqual = true;
+    int loop = 0; // Flag Variable
+
+    while(arraysAreEqual && loop < SIZE)
+    {
+        if(arrayA[count] != arrayB[count])
+        {
+            arraysAreEqual = false;
+        }
+        count++;
+        if (!arraysAreEqual)
+        {
+            cout << "The arrays dont match!" << endl;
+            break;
+        }
+    }
+    if (arraysAreEqual)
+    {
+        cout << "arrays do match!" << endl;
+    }
+
+    int lowest, highest;
+    
+    // Get Initial highest/lowest value in array
+    lowest = arrayA[0];
+    highest = arrayA[4];
+
+    for(int count=0; count < SIZE; count++)
+    {   
+        cout << arrayA[count];
+        
+        if(lowest > arrayA[count])
+        {
+            lowest = arrayA[count];
+        } 
+        if(highest < arrayA[count])
+        {
+            highest = arrayA[count];
+        }
+    }
+    cout << "Biggest Number in array is " << highest << endl;
+    cout << "Lowest Number in array is " << lowest << endl;
+
+    // Strings are stored as arrays
+    string myName = "Moon Ahmed";
+    cout << myName[0] << endl;
+
+    // Parallel Arrays have same index position. 
+    // Usually for related data.
+    int days[3] = {1, 2, 3};
+    double hoursArray[3] = {1.23, 3.24, 4.55};
+
+    for(int count=0; count<3; count++)
+    {
+        cout << "The days: " << days[count] << endl;
+        cout << "The hours associated: " << hoursArray[count] << endl;
+    }
+
+    // Create Typedef - Type Definitions
+    typedef int examScore;
+    examScore score1,score2;
+
+    // typedef for arrays
+    typedef int arrayType[];
+    const int BIGSIZE = 5;
+    arrayType bigTymeArray = {1,2,3,4,5};
+
+    // Array as function argument
+    
+    showValue(bigTymeArray, BIGSIZE);
+    
+    // Can use const int[] to ensure array passed into loop is not modified. 
+
+    // Multidimensional arrays
+    const int NUM_BIG_DIV = 5;
+    const int NUM_NOT_DIV = 4;
+    int sales[NUM_BIG_DIV][NUM_NOT_DIV];
+
+    for(int count=0; count < NUM_BIG_DIV; count++)
+    {
+        cout << "Hello from outer loop!" << endl;
+        for(int second_count=0; second_count < NUM_NOT_DIV; second_count++)
+        {
+            cout << "Hello from inner loop!" << endl;
+        }
+        // cout << multiDimensionalArray[count] << endl;
+    }
+
     return 0;
+}
+
+// void showValue(int intArray[], int arraySize)
+void showValue(arrayType someArray, int size)
+{
+    for(int count=0; count < size; count++)
+    {
+        cout << "This is arrayType printing: " << someArray[count] << endl;
+    }
 }
