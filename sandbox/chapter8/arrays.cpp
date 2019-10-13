@@ -10,6 +10,10 @@ typedef int arrayType[];
 // void showValue(int intArray[], int arraySize);
 void showValue(arrayType someArray, int size);
 
+const int NUM_ROWS = 3;
+const int NUM_COLS = 2;
+void passMultiOver(int [][NUM_COLS], int NUM_ROWS);
+
 int main() {
     
     // Arrays and Vectors
@@ -212,6 +216,10 @@ int main() {
         }
         // cout << multiDimensionalArray[count] << endl;
     }
+  
+    int myMultiDimensionalArray[NUM_ROWS][NUM_COLS] = {{1,2},{1,2},{1,2}};
+
+    passMultiOver(myMultiDimensionalArray, NUM_ROWS);
 
     return 0;
 }
@@ -222,5 +230,18 @@ void showValue(arrayType someArray, int size)
     for(int count=0; count < size; count++)
     {
         cout << "This is arrayType printing: " << someArray[count] << endl;
+    }
+}
+
+
+
+void passMultiOver(int array [][NUM_COLS], int NUM_ROWS)
+{
+    for(int row=0; row < NUM_ROWS; row++)
+    {
+       for (int col=0; col < NUM_COLS; col++)
+       {
+           cout << "printing element " << row << "of" << array[row][col] << endl;
+       }
     }
 }
