@@ -15,7 +15,7 @@
 #include <iostream> // Handle input/output 
 #include <iomanip>  // I/O manupulator declarations
 #include <string>   // Strings
-#include <typeinfo> // Type Information
+
 
 using namespace std;
 
