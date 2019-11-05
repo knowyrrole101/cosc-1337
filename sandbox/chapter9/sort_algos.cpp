@@ -37,7 +37,6 @@ void bubbleSort(int numbers[], int SIZE)
         swapMade = false;
         for(count=0; count<SIZE-1; count++)
         {   
-            int num1 = numbers[count];
             if(numbers[count]>numbers[count+1])
             {   
                 swap(numbers[count], numbers[count+1]);
