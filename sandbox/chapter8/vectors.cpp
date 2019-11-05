@@ -2,9 +2,7 @@
 #include <iomanip>  // I/O manupulator declarations
 #include <string>   // string
 #include <vector> // Vectors
-
 using namespace std;
-
 int main() 
 {
     // Declare a vector
@@ -72,6 +70,4 @@ int main()
     // Swap contents of vector
     vector<string> someNewVector;
     moonsNames.swap(someNewVector);
-
-
 }
