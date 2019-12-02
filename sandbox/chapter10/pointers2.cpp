@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cctype>
 #include <cstdio>
+#include <memory> // Smart Pointers 
 
 using namespace std;
 
@@ -46,8 +47,15 @@ class Squares
 };
 
 class Rectangle
-{
-    int height, width;
+{   
+    public:
+        int height;
+        int width;
+    Rectangle()
+    {
+        cout << "Creating rectangle" << endl;
+   
+    }
 };
 
 // Function accepts Class pointer 
@@ -63,24 +71,60 @@ int main()
     Squares *sqPtr = new Squares(3);
     outputSquares(sqPtr);
 
-    // Assign pointer to class
+//     // Assign pointer to class
+//     //*** Local object accessed through a pointer
     Rectangle *rectPtr = nullptr;
     Rectangle myRect;
-    // Assign 
+//     // Assign 
     rectPtr = &myRect;
-    // To access attributes inside myRect through rectPtr
+//     // To access attributes inside myRect through rectPtr
     (*rectPtr).width = 5;
-    (*rectPtr).length = 10; 
-    // Or through the structure pointer operator
+    (*rectPtr).height = 10; 
+//     // Or through the structure pointer operator
     rectPtr->width = 10;
-    rectPtr->length = 20;
+    rectPtr->height = 20;
 
+    // *** Dynamically allocated object through pointer
     // If Class object takes two params in constructor
-    rectPtr = new Rectangle(10,20);
+    // rectPtr = new Rectangle(10,20);
 
-    // Main dellocates the Squares Object
-    delete sqPtr;
-    delete rectPtr;
+    // // Main dellocates the Squares Object
+    // delete sqPtr;
+    // delete rectPtr;
+    /* SMART POINTERS!!!!*/
+    // Unique Pointer 
+    // unique_ptr class
 
+    unique_ptr<int> uniqueInt(new int); // unique pointer class
+    unique_ptr<int> uniqueInt2;
+    uniqueInt2 = unique_ptr<int>(new int);
+
+    *uniqueInt = *uniqueInt + 3;
+    *uniqueInt2 = 12; 
+    // Cant assign existing unique ptr to another one you have to use move function
+    unique_ptr<int> bigNum(new int);
+    unique_ptr<int> bigNum2(new int);
+    bigNum2 = move(bigNum);
+
+    cout << bigNum2 << endl; //Memory address
+    cout << *bigNum2 << endl;; //Value
+    
+    bigNum2.reset(); //Reset unique pointer to null pointer 
+    // bugNum2 = nullptr; //Reset unique pointer to null pointer 
+    // Pass by reference unique pointer
+    // void somefunction(unique_ptr<int>& someUniquePtr){}
+    
+    // UNique pointer call delete if pointing to an array of objects
+    unique_ptr<int[]> someUniquePtrArray(new int[5]); // Unique Pointer array
+
+    // Shared ptr class
+    // Shared pointer to manage dynamically allocate object that can have more than one owner
+    
+    
+    
+    
+    
+    
+    
     return 0;
 }
