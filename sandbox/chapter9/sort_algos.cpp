@@ -5,7 +5,6 @@
 #include <cstdio>
 
 using namespace std;
-
 void bubbleSort(int numbers[], int SIZE);
 void selectionSort(int numbers[], int SIZE);
 void swap(int &num1, int &num2);
@@ -24,11 +23,11 @@ int main()
     }
     return 0;
 }
-
 void bubbleSort(int numbers[], int SIZE)
 {      
     int count;
     int maxElement;
+    
     // Reverse array
     bool swapMade = true;
     // This top level loop keeps the swaps continuously going

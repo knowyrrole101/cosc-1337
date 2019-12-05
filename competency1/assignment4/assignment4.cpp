@@ -14,7 +14,6 @@
 #include <iostream> // Handle input/output 
 #include <iomanip>  // I/O manupulator declarations
 #include <string>   // string
-#include "robot.h"
 #include "robot.cpp"
 
 using namespace std;

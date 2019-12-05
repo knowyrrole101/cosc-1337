@@ -24,7 +24,6 @@ int main()
 
     return 0;
 }
-
 int linearSearch(int array[], int size, int value)
 {
     int index = 0;
