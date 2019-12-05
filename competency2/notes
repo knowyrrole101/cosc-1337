@@ -1,0 +1,175 @@
+CHAPTER 8 
+1. Write a value-returning function that calculates and returns the sum of the elements in a one-dimensional array of float values. The array and the array length should be parameters to the function.
+Discussion: Specifying the size of the first dimension of an array parameter is optional in C++. However, even if the size of the first dimension is included, C++ ignores it. That is why the size of the first dimension should either be a global constant or it should be a parameter to the function.
+float listTotal( float list[], int length )
+{
+   int index;
+   float sum = 0.0;
+
+   for (index = 0; index < length; index++)
+      sum = sum + list[index]
+   return sum;
+}
+2. Using the following Item struct definition:
+
+    struct Item
+    {
+       int itemNo;
+       string desc;
+       float price;
+    };
+Write the declaration for an array of 150 Item structs called inventory. Then write code to set the item number of the first Item in inventory to 10, it's description to "Granny Smith Apples", and it's price to 1.89.
+Item inventory[150];
+
+inventory[0].itemNo = 10;
+inventory[0].desc = "Granny Smith Apples";
+inventory[0].price = 1.89;
+3. Using the Item struct from question 2 above, write a function that prints the descriptions of all the elements in array inventory where the price is 2.0 or over. You can assume that the array is full.
+
+void print( Item inventory[] )
+{
+   int index;
+   cout << "List of items with price >= 2.00" << endl;
+   for ( index = 0; index < 150; index++ )
+      if ( inventory[index].price >= 2.0 )
+         cout << inventory[index].desc << endl;
+}
+4. Using the Item struct from question 2 above, write a function that returns a count of the number of elements in array inventory that have a price of 2.0 or greater.
+Note: this solution assumes that every struct in the array contains information about an Item. If some of the structs at the end of the array are empty, the logical size of the array should also be a parameter to the function.
+int countNotCheap( Item inventory[] )
+{
+   int index;
+   int count = 0;
+   for ( index = 0; index < 150; index++ )
+      if ( inventory[index].price >= 2.0 )
+         count++;
+   return count;
+}
+5. Using the following Item class definition:
+    class Item
+    {
+    private:
+       int itemNo;
+       string desc;
+       float price;
+    public:
+       Item();
+       void set( int newItemNo, string newDesc, float newPrice );
+       int getItemNo();
+       string getDesc();
+       float getPrice();
+    };
+    Item::Item()
+    {
+       set( 0, "", 0.0 );
+    }
+    void Item::set( int newItemNo, string newDesc, float newPrice )
+    {
+       if ( newItemNo >= 0 )
+          itemNo = newItemNo;
+       else
+          itemNo = 0;
+       desc = newDesc;
+       if ( newPrice >= 0.0)
+          price = newPrice;
+       else
+          price = 0;
+    }
+    int Item::getItemNo()
+    {
+       return itemNo;
+    }
+    string Item::getDesc()
+    {
+       return desc;
+    }
+    float Item::getPrice()
+    {
+       return price;
+    }
+Write client code to declare an array of 150 Item objects called inventory. Then write code to set the item number of the first Item in inventory to 10, it's description to "Granny Smith Apples", and it's price to 1.89.
+Item inventory[150];
+inventory[0].set( 10, "Granny Smith Apples", 1.89 );
+6. Using the Item class from question 5 above, write a function that prints the descriptions of all the elements in array inventory where the price is 2.0 or over. You can assume that the array is full.
+void print( Item inventory[] )
+{
+   int index;
+   cout << "List of items with price >= 2.00" << endl;
+   for ( index = 0; index < 150; index++ )
+      if ( inventory[index].getPrice() >= 2.0 )
+         cout << inventory[index].getDesc() << endl;
+}
+7. Using the Item class from question 5 above, write a function that returns a count of the number of elements in array inventory that have a price of 2.0 or greater.
+
+int countNotCheap( Item inventory[] )
+{
+   int index;
+   int count = 0;
+   for ( index = 0; index < 150; index++ )
+      if ( inventory[index].getPrice() >= 2.0 )
+         count++;
+   return count;
+}
+8. Write a value-returning function that calculates and returns the sum of the elements in a two-dimensional array of int values. Assume that global constant NUM_COLS contains the number of columns in the array. The array and the number of rows in array should be parameters to the function.
+
+Discussion: Specifying the size of the first dimension of an array parameter is optional in C++. However, the size of all remaining dimensions must be included in the parameter declaration. A good way to do this is to declare the size of all dimensions after the first as global constants. The following example declaration for NUMCOLS must be included before the first function that needs to access it. Many programmers declare main() as the first function in the program and declare all global constants before main().
+
+const int NUM_COLS = 5;
+int listTotal( int list[][NUM_COLS], int numRows )
+{
+   int row, col;
+   int sum = 0.0;
+   for (row = 0; row < numRows; row++)
+      for (col = 0; col < NUM_COLS; col++)
+         sum = sum + list[row][col];
+   return sum;
+}
+9. Write a function that sets all values in a two-dimensional array of double values to 1.0. Assume that global constant NUM_COLS contains the number of columns in the array. The array and the number of rows in array should be parameters to the function.
+void initialize( double table[][NUM_COLS], int numRows)
+{
+   int row, col;
+   for (row = 0; row < numRows; row++)
+      for (col = 0; col < NUM_COLS; col++)
+         table[row][col] = 1.0;
+} 
+CHAPTER 9
+1. Write a C++ function that searches an integer array that is sorted in increasing order and returns the index of the first element that is larger than a specified search value. The search value, the list, and the size of the list should be parameters to the function.
+
+Note: this function returns the array length if no elements in the list are larger than the specified value.
+int search( int srchVal, int list[], int length)
+{
+   int index = 0;
+   while ( index < length && list[index] <= srchVal )
+      index++;
+   return index;
+} 
+2. Why is it more efficient to search a long list using binary search as opposed to sequential search?
+
+When you are analyzing how efficient an algorithm is, it is good to look at what happens in the worst case. For a search algorithm, the worst case occurs when the item you are searching for is not in the array.
+
+Sequential search - In the sequential search, you start at one end of the array and compare the value you are searching for to each successive item in the array. If the value you are searching for is not in the array, you end up having to "look at" each item in the array. Another way to say this is that each time you compare the search value to an item in the array and do not get a match, you only eliminate that one item from the list of items that still need to be searched.
+
+Binary search - the binary search uses the fact that the array items are sorted to improve the sort efficiency. You start by looking at the item in the middle of the array. If the search value does not match that item, you then determine if the search value should come before the middle item or after the middle item. You can then eliminate the half of the array that cannot contain the search item and repeat the process for the remaining half. Another way to say this is that each time you compare the search value to an item in the array and do not get a match, you can eliminate half of the array items that still need to be searched. Because each unsuccessful examination of an array element will eliminate half the remaining array, the binary search is much more efficient.
+
+Note that the binary search is more complicated than the sequential search. But if a list contains more than 20 or 30 items, the binary search should be faster than the sequential search. The longer a list is, the more important it is to use an efficient search like the binary search.
+
+3. The function shown below will sort an integer array in ascending (increasing) order. That is, after calling sort the smallest element will be at index 0, the next smallest at index 1, etc. What would you need to change to sort the array in descending (decreasing) order?
+
+Discussion: All you need to do is change the comparison in the if statement that checks if adjacent elements are out of order. Change it from ">" to "<". See change below.
+void sort( int list[], int length )
+{
+   int index, temp;
+   bool sorted = false;
+   while ( !sorted )
+   {
+      sorted = true
+      for ( index = 0; index < length - 1; index++ )
+         if ( list[index] < list[index+1] )
+         {
+            temp = list[index];
+            list[index] = list[index+1];
+            list[index+1] = temp;
+            sorted = false;
+         }
+   }
+}
