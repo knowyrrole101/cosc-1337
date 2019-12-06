@@ -4,6 +4,8 @@
 #include <cctype> // character testing
 #include <cstdio>
 #include <memory> // Smart Pointers 
+#include <sstream> 
+#include <string>
 
 using namespace std;
 
@@ -107,7 +109,44 @@ int main()
     //     cout << name12 << " then " << name10 << endl;
     // }
 
+    string namesnstuff = "John 20 50";
+    const char *cstr = "Amy 30 42";
+    istringstream istr1(namesnstuff);
+    istringstream istr2;
+    ostringstream ostr;
 
+    string name3;
+    int score1, score2, average_score;
+
+    // istring stream use.
+    istr1 >> name3 >> score1 >> score2;
+    average_score = (score1 + score2)/2;
+    ostr << name << " has average score of " << average_score << endl; 
+    cout << ostr.str();
+
+    // Convert to hexadecimal
+    ostr << hex;
+    ostr << name << " has average score of " << average_score << endl; 
+    cout << ostr.str();
+
+    // convert string to double
+    string string2convert;
+    size_t pos;
+
+    string2convert = "342.57isthenumber";
+    // Parse double
+    double decimal = stod(string2convert, &pos);
+    cout << "The converted double is " << decimal << endl;
+     
+    //stoi(string, &pos) string to integer
+    //string copy 
+    string thisString = "Moon Ahmed";
+    int k = 0;
+    while(thisString[k] != ' ' && thisString[k] != '\0')
+    {           
+        cout << thisString[k] << endl;
+        k++;
+    }
 
 
     return 0;
