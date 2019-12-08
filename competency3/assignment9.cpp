@@ -1,17 +1,14 @@
 //******************************************************************
 // Payroll 2.0 - Assignment 9
 // Programmer: Mamun Ahmed
-// Completed : 
+// Completed : 12/8/2019
 // Status    : Completed
 //
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
+// Payroll 2.0 stores employee data calculates data from two
+// input files and writes to a new payroll.txt file.
+// Payroll 2.0 relies on Employee class and EmployeePayroll Struct
+// objects. They store data in memory before processing and then
+// eventually written/formatted in tabular format to a txt file.
 //*********************************************************************
 
 #include <iostream>
