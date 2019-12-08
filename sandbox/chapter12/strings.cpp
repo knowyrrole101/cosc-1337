@@ -147,7 +147,11 @@ int main()
         cout << thisString[k] << endl;
         k++;
     }
+   
+    string someString;
 
+    //string methods
+    
 
     return 0;
 }

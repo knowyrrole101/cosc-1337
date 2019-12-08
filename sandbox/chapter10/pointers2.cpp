@@ -119,7 +119,7 @@ int main()
 
     // Shared ptr class
     // Shared pointer to manage dynamically allocate object that can have more than one owner
-    
+    shared_ptr<int>
     
     
     
