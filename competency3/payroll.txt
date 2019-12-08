@@ -1,0 +1,6 @@
+ID:            Name:               Gross Pay:          Tax:                Insurance:          Net Pay:            
+5              Christine Kim       1200.00             180.00              60.00               960.00              
+15             Ray Allrich         440.75              66.11               0.00                374.64              
+16             Adrian Bailey       500.00              75.00               0.00                425.00              
+17             Juan Gonzales       1245.00             186.75              20.00               1038.25             
+22             Cindy Burke         300.00              45.00               20.00               235.00              

@@ -4,4 +4,3 @@
 17 Juan Gonzales       # 30.00 1 1
 18 J. P. Morgan        #  8.95 0 0
 22 Cindy Burke         # 15.00 1 0
-

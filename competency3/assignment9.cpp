@@ -122,7 +122,7 @@ int main()
     transactionFileName = "trans9.txt";
     // File to be written
     string payrollFileName;
-    payrollFileName = "payroll.txt";
+    payrollFileName = "./payroll.txt";
 
     // Employee Information Objects Array
     const int EMPLOYEE_SIZE = 6;
@@ -135,27 +135,6 @@ int main()
     
     // Process Data and Calculate Payroll
     processPayroll(employees, employeePayrolls, EMPLOYEE_SIZE);
-    
-    for(int count=0; count < 6;count++)
-    { 
-      cout << fixed << showpoint << setprecision(2);
-      cout << "******Employee " << count+1 << "******" << endl; 
-      cout << "Employee Id: " << employees[count].getId() <<endl;
-      cout << "Employee Name: " << employees[count].getName() <<endl;
-      cout << "Employee Pay Rate: $" << employees[count].getPay() <<endl;
-      cout << "Employee Dependents: " << employees[count].getNumDeps() <<endl;
-      cout << "Employee Type: " << employees[count].getEmpType() <<endl;
-      cout << "******PAYROLL DATA******" << endl;
-      cout << "Employee Id: " << employeePayrolls[count].empId << endl;
-      cout << fixed << showpoint << setprecision(1);
-      cout << "Employee Hours: " << employeePayrolls[count].empHours << endl;
-      cout << fixed << showpoint << setprecision(2);
-      cout << "Employee Insurance Paid: $" << employeePayrolls[count].empInsurancePaid << endl;
-      cout << "Employee Tax Paid: $" << employeePayrolls[count].empTaxPaid << endl;
-      cout << "Employee Gross Pay: $" << employeePayrolls[count].empGrossPay << endl;
-      cout << "Employee Net Pay: $" << employeePayrolls[count].empNetPay << endl;
-      cout << "******END******" << endl;
-    }
 
     writePayroll(payrollFileName, employees, employeePayrolls, EMPLOYEE_SIZE);
 
@@ -201,10 +180,10 @@ void readMasterFile(string masterFileName, Employee employees[], int EMPLOYEE_SI
     // Close File
     masterFile.close();
 }
-
+// Pass in File Name, Arrays of Class Employee and Structure EmployeePayroll
 void readTransactionFile(string transactionFileName, EmployeePayroll employeePayrolls[], int EMPLOYEE_SIZE)
 {   
-    string line1; // String Line to Parse
+    string line1; 
     ifstream transactionFile;
     
     transactionFile.open(transactionFileName);
@@ -222,7 +201,7 @@ void readTransactionFile(string transactionFileName, EmployeePayroll employeePay
   
     transactionFile.close();
 }
-
+// Process the payrolls for all employees and run all calculations
 void processPayroll(Employee employees[], EmployeePayroll employeePayrolls[], int EMPLOYEE_SIZE)
 {   
     // Local Function Variables
@@ -240,26 +219,26 @@ void processPayroll(Employee employees[], EmployeePayroll employeePayrolls[], in
     for(count=0; count < EMPLOYEE_SIZE; count++){
       // Union Member
       if(employees[count].getEmpType() == 0){
-
+        // If Member has worked Overtime
         if(employeePayrolls[count].empHours>40){
-          regularHours = 40; // 40 Hour Work week
-          overTimeHours = employeePayrolls[count].empHours - regularHours; // Hours over 40
-          overTimePay = (overTimeHours * employees[count].getPay()) * 1.5; // Overtime Pay Rate
-          regularPay = regularHours * employees[count].getPay(); // Pay * Hours
-          insurancePaid = employees[count].getNumDeps() * 20.0; // Insurance Premiums
-          grossPay = (regularPay + overTimePay) - insurancePaid; // Gross pay - minus insurance
-          netPay = grossPay * .85; // Net pay minus 15%
-          taxPaid = grossPay - netPay; // Net taxes paid
-
+          regularHours = 40; 
+          overTimeHours = employeePayrolls[count].empHours - regularHours; 
+          overTimePay = (overTimeHours * employees[count].getPay()) * 1.5; 
+          regularPay = regularHours * employees[count].getPay(); 
+          insurancePaid = employees[count].getNumDeps() * 20.0; 
+          grossPay = regularPay + overTimePay; 
+          netPay = (grossPay * .85) - insurancePaid;
+          taxPaid = grossPay - (grossPay * .85); 
+        // If Worked 40 Hours or Less
         } else if (employeePayrolls[count].empHours > 0 || employeePayrolls[count].empHours <= 40) {
           regularHours = employeePayrolls[count].empHours;
           regularPay = regularHours * employees[count].getPay();
           insurancePaid = employees[count].getNumDeps() * 20.0;
-          grossPay = regularPay - insurancePaid; 
-          netPay = grossPay * .85;
-          taxPaid = grossPay - netPay;
+          grossPay = regularPay; 
+          netPay = (grossPay * .85) - insurancePaid;
+          taxPaid = grossPay - (grossPay * .85);
         }
-
+        // Pass in relevant data to EmployeePayrolls Struct 
         employeePayrolls[count].empNetPay = netPay;
         employeePayrolls[count].empGrossPay = grossPay;
         employeePayrolls[count].empInsurancePaid = insurancePaid;
@@ -274,8 +253,8 @@ void processPayroll(Employee employees[], EmployeePayroll employeePayrolls[], in
           regularPay = regularHours * employees[count].getPay();
           insurancePaid = employees[count].getNumDeps() * 20.0;
           grossPay = regularPay;
-          netPay = grossPay * .85;
-          taxPaid = grossPay - netPay;
+          netPay = (grossPay * .85) - insurancePaid;
+          taxPaid = grossPay - (grossPay * .85);
 
           // Add Management Calculated Pay to EmployeePayroll Structures Array
           employeePayrolls[count].empNetPay = netPay;
@@ -287,6 +266,43 @@ void processPayroll(Employee employees[], EmployeePayroll employeePayrolls[], in
     }  
 }
 
-void writePayroll(){
-
+// Write Payroll Data to TXT File
+void writePayroll(string payrollFileName, Employee employees[], EmployeePayroll employeePayrolls[], int EMPLOYEE_SIZE)
+{ 
+  int success;
+  ofstream payrollFile;
+  payrollFile.open(payrollFileName);
+ 
+  payrollFile << fixed << showpoint << setprecision(2); // Set Floating Point Precision
+  payrollFile << left << setw(15) << "ID: " 
+                      << setw(20) << "Name:" 
+                      << setw(20) << "Gross Pay:"
+                      << setw(20) << "Tax:" 
+                      << setw(20) << "Insurance:" 
+                      << setw(20) << "Net Pay:"
+                      << endl;
+  
+  int count;
+  success = 0; // Successful Payrolls Completed
+  for(count=0; count < EMPLOYEE_SIZE; count++)
+  {
+    if(employees[count].getId() > 0 && employeePayrolls[count].empHours > 0.0){
+      payrollFile << left << setw(15) << employees[count].getId() 
+                          << setw(20) << employees[count].getName()
+                          << setw(20) << employeePayrolls[count].empGrossPay
+                          << setw(20) << employeePayrolls[count].empTaxPaid
+                          << setw(20) << employeePayrolls[count].empInsurancePaid
+                          << setw(20) << employeePayrolls[count].empNetPay
+                          << endl; 
+      success++;
+    } else {
+      // Error Messaging 
+      if(employees[count].getId() <= 0){
+        cout << "Invalid Employee ID! Unable to Add to Payroll Processing Report.\n" << endl;
+      } else {
+        cout << "Invalid Employee Hours! Unable to Add Employee #" << employees[count].getId() << " to Payroll Processing Report.\n" << endl;
+      }
+    }
+  }
+  cout << "Payroll Processing complete!\nTotal number of transactions completed successfully: " << success << " out of " << count << endl;
 }
