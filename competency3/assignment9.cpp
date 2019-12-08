@@ -227,7 +227,7 @@ void processPayroll(Employee employees[], EmployeePayroll employeePayrolls[], in
           netPay = (grossPay * .85) - insurancePaid;
           taxPaid = grossPay - (grossPay * .85); 
         // If Worked 40 Hours or Less
-        } else if (employeePayrolls[count].empHours > 0 || employeePayrolls[count].empHours <= 40) {
+        } else if (employeePayrolls[count].empHours > 0 && employeePayrolls[count].empHours <= 40) {
           regularHours = employeePayrolls[count].empHours;
           regularPay = regularHours * employees[count].getPay();
           insurancePaid = employees[count].getNumDeps() * 20.0;
