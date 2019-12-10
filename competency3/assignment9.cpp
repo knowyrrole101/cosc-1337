@@ -12,6 +12,7 @@
 //*********************************************************************
 
 #include <iostream>
+#include <cctype>
 #include <iomanip>
 #include <string>
 #include <fstream>
@@ -283,7 +284,6 @@ void writePayroll(string payrollFileName, Employee employees[], EmployeePayroll 
   success = 0; // Successful Payrolls Completed
   for(count=0; count < EMPLOYEE_SIZE; count++)
   {
-    cout << employeePayrolls[count].empHours << endl;
     if(employees[count].getId() > 0 && employeePayrolls[count].empHours > 0.0){
       payrollFile << left << setw(15) << employees[count].getId() 
                           << setw(20) << employees[count].getName()
