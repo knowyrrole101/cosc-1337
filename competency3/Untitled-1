@@ -1,0 +1,7 @@
+TO DO
+1. Dynamic Employee Master Information - Up to 100
+a) Remove the 6 since it has to be dynamic. Use Pointer to int.
+2. C-String to store employee name
+a) 20 chars in length
+3. Two files (master and transaction)
+4. Employee Id, 20Char Name, Pay rate, Deps, type, gender

@@ -61,11 +61,11 @@ int main()
     // Create Empty Node
     ListNode *numberList = nullptr;
     double number1;
-    
-    while(someFile >> number1)
-    {
-        numberList = new ListNode(number1, numberList)
-    }
+
+    // while(someFile >> number1)
+    // {
+    //     numberList = new ListNode(number1, numberList)
+    // }
 
 
     return 0;
