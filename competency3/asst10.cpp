@@ -148,7 +148,9 @@ void readMasterFile(string masterFileName, int EMPLOYEE_SIZE){
     inFile.open(masterFileName); 
     char line[100];
     if (inFile.good()){
-        
+        while(!inFile.eof()){
+            cout << "going" << endl;
+        }
        
         
     }
