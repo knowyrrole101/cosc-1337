@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <cctype>
 #include <string>
+#include <stdio.h>
 #include <string.h>
 #include <fstream>
 #include <sstream>
@@ -136,23 +137,30 @@ void readMasterFile(string masterFileName, int EMPLOYEE_SIZE){
     ifstream inFile;
     istringstream cstr;
 
-    int empId;
-    int numDeps;
-    int type;
-    double hourlyPay;
-    char firstName[21];
-    char lastName[21];
+    // int empId;
+    // int numDeps;
+    // int type;
+    // double hourlyPay;
+    // char name[21];
     
     Employee tempEmp;
 
     inFile.open(masterFileName); 
-    char line[100];
-    if (inFile.good()){
-        while(!inFile.eof()){
-            cout << "going" << endl;
-        }
-       
-        
+    char ch;
+    char *empId[3];
+    char name[22];
+    char hourlyPay[6];
+    
+    int count;
+
+    while(inFile >> ch)
+    {   
+        if(count<3){
+         
+            
+        }      
+        count++;
+        cout << empId << endl;
     }
     // for(int count=0; count < EMPLOYEE_SIZE; count++){
         
