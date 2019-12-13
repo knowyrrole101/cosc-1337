@@ -144,24 +144,27 @@ void readMasterFile(string masterFileName, int EMPLOYEE_SIZE){
     // char name[21];
     
     Employee tempEmp;
-
+    char line[100];
     inFile.open(masterFileName); 
-    char ch;
-    char *empId[3];
+    
+    int empId[3];
     char name[22];
     char hourlyPay[6];
     
     int count;
+    inFile.get(line, '\n');
+    cstr.str(line);
+    cstr >> empId >> name >> endl;
 
-    while(inFile >> ch)
-    {   
-        if(count<3){
+    // while(inFile >> ch)
+    // {   
+    //     if(count<3){
          
             
-        }      
-        count++;
-        cout << empId << endl;
-    }
+    //     }      
+    //     count++;
+    //     cout << empId << endl;
+    // }
     // for(int count=0; count < EMPLOYEE_SIZE; count++){
         
     //     inFile.get(line, 50, '\n');
