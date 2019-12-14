@@ -1,0 +1,3 @@
+ID:            Name:               Tax:                Insurance:          Gross Pay:          Net Pay:            Hours:              Error Message:      
+36             Melvin Ducan        109.84              0.00                732.25              622.41              -40                 inaccurate hours    
+Total records processed (success): 14

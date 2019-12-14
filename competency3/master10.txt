@@ -13,4 +13,3 @@
 40 Imelda Buentello    14.50 0 0 F
 42 J. P. Morgan        12.50 0 0 M
 43 Maria Diaz          15.00 0 0 F
-

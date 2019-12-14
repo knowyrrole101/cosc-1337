@@ -1,318 +1,314 @@
+//******************************************************************
+// Payroll 3.0 - Assignment 10
+// Programmer: Mamun Ahmed
+// Completed : 12/13/2019
+// Status    : Completed
+//
+// Payroll 3.0 stores all initial program file data in Employee class
+// Strings are represented using c-strings and updated with pointers.
+// Once data is processed and matched against an ID. It is then 
+// processed and written to file. One file is records, and one is 
+// error record logs.
+//*********************************************************************
 #include <iostream>
 #include <iomanip>
 #include <cctype>
 #include <string>
+#include <stdio.h>
+#include <string.h>
 #include <fstream>
 #include <sstream>
 
 using namespace std;
 
 // Employee Class
-class Employee 
-{
-  private:
-    int id;             // employee ID
-    char name[21];      // C-string employee name
-    double hourlyPay;   // pay per hour
-    int numDeps;        // number of dependents
-    int type;           // employee type
-    char gender;        // gender type
+class Employee
+{   
+    
+    private:
+        int id;
+        char name[21];
+        float hourlyPay;
+        int numDeps;
+        int type;
+    
+    public:
+        
+        Employee(){
+          strcpy(this->name, "");
+          this->id = 0;
+          this->hourlyPay = 0.00;
+          this->numDeps = 0.00;
+          this->type = 0.00;
+        };
 
-  public:
-    Employee( int initId=0, char *initName='\0', 
-              double initHourlyPay=0.0, 
-              int initNumDeps=0, int initType=0, char gender='\0');  // Constructor
+        bool set(int newId, char newName[], float newHourlyPay, int newNumDeps, int newType);
 
-    bool set(int newId, char *newName, double newHourlyPay,
-             int newNumDeps, int newType, char newGender);
+        const char *getName();
+        int getNumDeps();
+        int getId();
+        int getType();
+        float getPay();
 
-    // Member function protos
-    int getId();
-    char * getName();
-    float getPay();
-    int getNumDeps();
-    int getEmpType();
-    char getGender();
 };
 
-Employee::Employee(int initId, char *initName, double initHourlyPay, int initNumDeps, int initType, char initGender)
-{
-  bool status = set(initId, initName, initHourlyPay, initNumDeps, initType, initGender);
-
-  if ( !status )
-  {
-    id = 0;
-    strcpy(name, "\0"); //Set First Char to Null
-    hourlyPay = 0.0;
-    numDeps = 0;
-    type = 0;    
-  }
-}
-
-bool Employee::set(int newId, char *newName, double newHourlyPay, int newNumDeps, int newType, char newGender)
-{
-  bool status = false;
-  if ( newId > 0 && newHourlyPay > 0 && newNumDeps >= 0 && newType >= 0 && newType <= 1 && strlen(newGender)>0 && strlen(newName)>0)
-  { 
-    status = true;
-    id = newId;
-    strcpy(name, newName);
-    hourlyPay = newHourlyPay;
-    numDeps = newNumDeps;
-    type = newType;
-    gender = newGender;
-  }
-  return status;
-}
-
-int Employee::getId(){
-    return this->id;
-}
-
-char * Employee::getName(){
-    return this->name;
-}
-
-float Employee::getPay(){
-    return this->hourlyPay;
+bool Employee::set(int newId, char newName[], float newHourlyPay, int newNumDeps, int newType){
+    bool passed = false;
+    if(newId > 0 && newHourlyPay > 0.00 && newNumDeps >= 0 && newType >= 0 && newType <= 1 && strlen(newName)>0){
+        this->id = newId;
+        strcpy(this->name, newName);
+        this->hourlyPay = newHourlyPay;
+        this->numDeps = newNumDeps;
+        this->type = newType;
+    }
+    return passed;
 }
 
 int Employee::getNumDeps(){
     return this->numDeps;
 }
 
-int Employee::getEmpType(){
+int Employee::getId(){
+    return this->id;
+}
+
+int Employee::getType(){
     return this->type;
 }
-
-char Employee::getGender(){
-    return this->gender;
+float Employee::getPay(){
+    return this->hourlyPay;
 }
 
-struct EmployeePayroll {
-  int empId = 0;
-  // Defaults
-  double empHours = 0.00;
-  double empInsurancePaid = 0.00;
-  double empTaxPaid = 0.00;
-  double empGrossPay = 0.00;
-  double empNetPay = 0.00;
-};
+const char * Employee::getName(){
+    return this->name;
+}
 
 // Function Prototypes
-int fileLineCount(string masterFileName);
-void readMasterFile(string masterFileName, Employee employees[], int EMPLOYEE_SIZE);
-void readTransactionFile(string transactionFileName, EmployeePayroll employeePayrolls[], int EMPLOYEE_SIZE);
-void processPayroll(Employee employees[], EmployeePayroll employeePayrolls[], int EMPLOYEE_SIZE);
-void writePayroll(string payrollFileName, Employee employees[], EmployeePayroll employeePayrolls[], int EMPLOYEE_SIZE);
+void readMasterFile(Employee employees[], int MAX_EMPLOYEES, int &EMPLOYEE_COUNT);
+void readTransFile(Employee employees[], int MAX_EMPLOYEES,  int EMPLOYEE_COUNT);
+void processPayroll(Employee employee, int hours, int &success, float &totalGrossPay, float &totalNetPay);
+void writeFileHeaders();
 
-int main()
-{   
-    // Files to be read
-    string masterFileName; 
-    masterFileName = "master10.txt";
-    string transactionFileName;
-    transactionFileName = "trans10.txt";
-    // File to be written
-    string payrollFileName;
-    payrollFileName = "./payroll.txt";
-    string errorFileName;
-    errorFileName = "./error.txt";
+int main(){
 
-    // Employee Information Objects Array ** Allows for Dynamic Array Size
-    
-    // int EMPLOYEE_SIZE = fileLineCount(masterFileName);
+    const int MAX_EMPLOYEES = 100;
+    int EMPLOYEE_COUNT = 0;
 
-    // Employee employees[EMPLOYEE_SIZE] = {};
-    // readMasterFile(masterFileName, employees, EMPLOYEE_SIZE);
-    
-    // // Employee Payroll Data Structs Array
-    // EmployeePayroll employeePayrolls[EMPLOYEE_SIZE] = {};
-    // readTransactionFile(transactionFileName, employeePayrolls, EMPLOYEE_SIZE); 
-    
-    // Process Data and Calculate Payroll
-    // processPayroll(employees, employeePayrolls, EMPLOYEE_SIZE);
+    Employee employees[MAX_EMPLOYEES] = {};
 
-    // writePayroll(payrollFileName, employees, employeePayrolls, EMPLOYEE_SIZE);
+    readMasterFile(employees, MAX_EMPLOYEES, EMPLOYEE_COUNT);
+    writeFileHeaders();
+    readTransFile(employees, MAX_EMPLOYEES, EMPLOYEE_COUNT);
 
     return 0;
 }
 
-int fileLineCount(string masterFileName)
-{   
-    ifstream masterFile;
-    masterFile.open(masterFileName);
-    int count;
-    count = 0;
-
-    while(!masterFile.eof()){
-        count ++;
-    }
-    return count;
-}
-
-void readMasterFile(string masterFileName, Employee employees[], int EMPLOYEE_SIZE)
-{   
-    string line1, line2; // String Lines to Parse
-    string empName; 
-    int empId, numDeps, empType;
-    double hourlyRate;
+void readMasterFile(Employee employees[], int MAX_EMPLOYEES, int &EMPLOYEE_COUNT){
+    ifstream inFile;
     
-    // File stream and and data retrieval
-    ifstream masterFile;
-    masterFile.open(masterFileName);
+    inFile.open("master10.txt");
     
-    // Loop Through File by Delimiter Specified.
-    int count;
-    for(count=0; count < EMPLOYEE_SIZE; count++)
+    // Temp variables
+    int firstId;
+    char firstName[21];
+    float firstHourlyPay;
+    int firstNumDeps;
+    int firstType;
+    char gender; //ignored temp
+
+    int numEmployees = 0;
+
+    // First Employee Information
+    inFile >> firstId;
+    inFile.ignore(); 
+    inFile.getline(firstName, 21);
+    inFile.clear();
+    inFile >> firstHourlyPay >> firstNumDeps >> firstType >> gender;
+    char *ptr;
+    ptr = firstName;
+    
+    employees[numEmployees].set(firstId, ptr, firstHourlyPay, firstNumDeps, firstType);
+    numEmployees++;
+    
+    //  EOF LOOP BUG!! RESOLVED WITH INFILE GOOD!
+    while(!inFile.eof() && numEmployees < MAX_EMPLOYEES)
     {
-      getline(masterFile, line1, '#');
-      getline(masterFile, line2, 20);
-      
-      // Store Temp Chars
-      string temp;
-      string temp2;
-      temp = line2[7]; //numDeps Char
-      temp2 = line2[9]; //employeeType Char
-
-      if(line1.length()>=23){
-        empId = stoi(line1);
-        // Where Employee Number starts to 20 Characters per line
-        empName = line1.substr(3,20);
-        hourlyRate = stod(line2);
-        numDeps = stoi(temp);
-        empType = stoi(temp2);
-      }
-      // Create Temp Employee and pass to employees Array.
-    //   Employee empTemp(empId, empName, hourlyRate, numDeps, empType);
-    //   employees[count] = empTemp;
+        inFile >> firstId;
+        inFile.ignore(); 
+        inFile.getline(firstName, 21);
+        ptr = firstName;
+        // Clear the stream
+        inFile.clear();
+        inFile >> firstHourlyPay >> firstNumDeps >> firstType >> gender;
+        if (!inFile.good())
+        {
+            //input failure, leave the loop
+            break;
+        }
+        employees[numEmployees].set(firstId, ptr, firstHourlyPay, firstNumDeps, firstType);
+        numEmployees++;
     }
+    EMPLOYEE_COUNT = numEmployees;
+    // Clear Pointer Memory
+    ptr = nullptr;    
     // Close File
-    masterFile.close();
+    inFile.close();
 }
-// Pass in File Name, Arrays of Class Employee and Structure EmployeePayroll
-void readTransactionFile(string transactionFileName, EmployeePayroll employeePayrolls[], int EMPLOYEE_SIZE)
-{   
-    string line1; 
-    ifstream transactionFile;
-    
-    transactionFile.open(transactionFileName);
-    int count;
-    for(count=0; count<EMPLOYEE_SIZE; count++)
-    {
-      EmployeePayroll temp;
-      getline(transactionFile, line1);
 
-      istringstream str1(line1);
-      str1 >> temp.empId >> temp.empHours; 
-      
-      employeePayrolls[count] = temp;
-    }
-  
-    transactionFile.close();
+void readTransFile(Employee employees[], int MAX_EMPLOYEES, int EMPLOYEE_COUNT){
+    ifstream inFile;
+    ofstream payrollFile;
+    ofstream logFile;
+
+    inFile.open("trans10.txt");
+    payrollFile.open("payroll.txt", std::fstream::in | std::fstream::out | std::fstream::app);
+
+    int ids;
+    double hours;
+    int numEmployees = 0;
+    int successCount = 0;
+    float totalNetPay = 0.00;
+    float totalGrossPay = 0.00;        
+
+    inFile >> ids >> hours;
+    numEmployees++;    
+    // Process Logic
+    while(!inFile.eof() && numEmployees < MAX_EMPLOYEES){
+        int count;
+        for(count=0; count < EMPLOYEE_COUNT;count++)
+        {   
+            // Temp Employee Data Holder to pass to payroll
+            Employee tempEmp;
+            tempEmp = employees[count];
+            
+            if(employees[count].getId()==ids){
+                processPayroll(tempEmp, hours, successCount, totalNetPay, totalGrossPay);
+            } 
+        }
+        inFile >> ids >> hours;
+        if(!inFile.good()){
+            break;
+        }
+        numEmployees++;
+    }   
+    // Write Weekly Payouts
+    inFile.close();
+    payrollFile << fixed << showpoint << setprecision(2);
+    payrollFile << "Total Weekly Gross Pay: $" << totalGrossPay << endl;
+    payrollFile << "Total Weekly Net Pay: $" << totalNetPay << endl;
+    payrollFile.close();
+    // Total Records processed to log file
+    logFile.open("./logfile.txt", std::fstream::in | std::fstream::out | std::fstream::app);
+    logFile << "Total records processed (success): " << successCount;
+    logFile.close();
+
+    
 }
-// Process the payrolls for all employees and run all calculations
-void processPayroll(Employee employees[], EmployeePayroll employeePayrolls[], int EMPLOYEE_SIZE)
-{   
-    // Local Function Variables
-    double overTimeHours; // Overtime hours 40 - employeeHours
-    double regularHours; // Assigned 40 or employeeHours
-    double taxPaid; // Taxes paid by employee
-    double regularPay; // (Hours worked * salary rate)
-    double overTimePay; // (Hours Worked over 40 * salary rate) * 1.5
-    double insurancePaid; // Insurance Paid
-    double netPay; // Overtime Pay + Gross Pay
-    double grossPay; // Net Play less 15% 
 
+void processPayroll(Employee employee, int hours, int &success, float &totalGrossPay, float &totalNetPay){
+    // File io
+    ofstream payrollFile;
+    ofstream logFile;
+    payrollFile.open("./payroll.txt", std::fstream::in | std::fstream::out | std::fstream::app); // To Append to Text File
+    logFile.open("./logfile.txt", std::fstream::in | std::fstream::out | std::fstream::app); // To Append to Text File
     
-    int count;
-    for(count=0; count < EMPLOYEE_SIZE; count++){
-      // Union Member
-      if(employees[count].getEmpType() == 0){
+    float regularHours;
+    float regularPay;
+    float overTimeHours;
+    float overTimePay;
+    float insurancePaid;
+    float grossPay;
+    float netPay;
+    float taxPaid;
+    
+    // Transaction Processing
+    if(employee.getType() == 0){
         // If Member has worked Overtime
-        if(employeePayrolls[count].empHours>40){
+        if(hours>40){
           regularHours = 40; 
-          overTimeHours = employeePayrolls[count].empHours - regularHours; 
-          overTimePay = (overTimeHours * employees[count].getPay()) * 1.5; 
-          regularPay = regularHours * employees[count].getPay(); 
-          insurancePaid = employees[count].getNumDeps() * 20.0; 
+          overTimeHours = hours - regularHours; 
+          overTimePay = (overTimeHours * employee.getPay()) * 1.5; 
+          regularPay = regularHours * employee.getPay(); 
+          insurancePaid = employee.getNumDeps() * 20.0; 
           grossPay = regularPay + overTimePay; 
           netPay = (grossPay * .85) - insurancePaid;
           taxPaid = grossPay - (grossPay * .85); 
         // If Worked 40 Hours or Less
-        } else if (employeePayrolls[count].empHours > 0 && employeePayrolls[count].empHours <= 40) {
-          regularHours = employeePayrolls[count].empHours;
-          regularPay = regularHours * employees[count].getPay();
-          insurancePaid = employees[count].getNumDeps() * 20.0;
+        } else if (hours > 0 && hours <= 40) {
+          regularHours = hours;
+          regularPay = regularHours * employee.getPay();
+          insurancePaid = employee.getNumDeps() * 20.0;
           grossPay = regularPay; 
           netPay = (grossPay * .85) - insurancePaid;
           taxPaid = grossPay - (grossPay * .85);
         }
-        // Pass in relevant data to EmployeePayrolls Struct 
-        employeePayrolls[count].empNetPay = netPay;
-        employeePayrolls[count].empGrossPay = grossPay;
-        employeePayrolls[count].empInsurancePaid = insurancePaid;
-        employeePayrolls[count].empTaxPaid = taxPaid;
-        
-      // Management Pay Processing
-      } else {
-        
-        if(employeePayrolls[count].empHours > 0) {
-          
-          regularHours = employeePayrolls[count].empHours;
-          regularPay = regularHours * employees[count].getPay();
-          insurancePaid = employees[count].getNumDeps() * 20.0;
+    //   // Management Pay Processing
+    } else {
+        if(hours > 0) {
+          regularHours = hours;
+          regularPay = regularHours * employee.getPay();
+          insurancePaid = employee.getNumDeps() * 20.0;
           grossPay = regularPay;
           netPay = (grossPay * .85) - insurancePaid;
           taxPaid = grossPay - (grossPay * .85);
+        } 
+    }
 
-          // Add Management Calculated Pay to EmployeePayroll Structures Array
-          employeePayrolls[count].empNetPay = netPay;
-          employeePayrolls[count].empGrossPay = grossPay;
-          employeePayrolls[count].empInsurancePaid = insurancePaid;
-          employeePayrolls[count].empTaxPaid = taxPaid;
-        }
-      }
-    }  
+    payrollFile << fixed << showpoint << setprecision(2);
+    if(employee.getId() > 0 && hours > 0.0){
+        payrollFile << left << setw(15) << employee.getId() 
+                          << setw(20) << employee.getName()
+                          << setw(20) <<  taxPaid
+                          << setw(20) <<  insurancePaid
+                          << setw(20) <<  grossPay
+                          << setw(20) <<  netPay
+                          << endl; 
+        success++;
+    } 
+    else if(hours < 0.0){
+        logFile << fixed << showpoint << setprecision(2);
+        logFile << left << setw(15) << employee.getId() 
+                          << setw(20) << employee.getName()
+                          << setw(20) << taxPaid
+                          << setw(20) << insurancePaid
+                          << setw(20) << grossPay
+                          << setw(20) << netPay
+                          << setw(20) << hours
+                          << setw(20) << "inaccurate hours"
+                          << endl;     
+    }
+
+    // Add to total net/gross pay summaries    
+    totalGrossPay += grossPay;
+    totalNetPay += netPay;
+    
+    payrollFile.close();
+    logFile.close();
 }
 
-// Write Payroll Data to TXT File
-void writePayroll(string payrollFileName, Employee employees[], EmployeePayroll employeePayrolls[], int EMPLOYEE_SIZE)
-{ 
-  int success;
-  ofstream payrollFile;
-  payrollFile.open(payrollFileName);
- 
-  payrollFile << fixed << showpoint << setprecision(2); // Set Floating Point Precision
-  payrollFile << left << setw(15) << "ID: " 
+// File Header Row Function
+void writeFileHeaders(){
+    ofstream payrollFile;
+    ofstream logFile;
+    payrollFile.open("./payroll.txt");
+
+    payrollFile << left << setw(15) << "ID: " 
                       << setw(20) << "Name:" 
-                      << setw(20) << "Gross Pay:"
                       << setw(20) << "Tax:" 
-                      << setw(20) << "Insurance:" 
+                      << setw(20) << "Insurance:"
+                      << setw(20) << "Gross Pay:" 
                       << setw(20) << "Net Pay:"
                       << endl;
-  
-  int count;
-  success = 0; // Successful Payrolls Completed
-  for(count=0; count < EMPLOYEE_SIZE; count++)
-  {
-    if(employees[count].getId() > 0 && employeePayrolls[count].empHours > 0.0){
-      payrollFile << left << setw(15) << employees[count].getId() 
-                          << setw(20) << employees[count].getName()
-                          << setw(20) << employeePayrolls[count].empGrossPay
-                          << setw(20) << employeePayrolls[count].empTaxPaid
-                          << setw(20) << employeePayrolls[count].empInsurancePaid
-                          << setw(20) << employeePayrolls[count].empNetPay
-                          << endl; 
-      success++;
-    } else {
-      // Error Messaging 
-      if(employees[count].getId() <= 0){
-        cout << "Invalid Employee ID! Unable to Add to Payroll Processing Report.\n" << endl;
-      } else {
-        cout << "Invalid Employee Hours! Unable to Add Employee #" << employees[count].getId() << " to Payroll Processing Report.\n" << endl;
-      }
-    }
-  }
-  cout << "Payroll Processing complete!\nTotal number of transactions completed successfully: " << success << " out of " << count << endl;
+    
+
+    logFile.open("./logfile.txt");
+    logFile << left << setw(15) << "ID: " 
+                      << setw(20) << "Name:" 
+                      << setw(20) << "Tax:" 
+                      << setw(20) << "Insurance:"
+                      << setw(20) << "Gross Pay:" 
+                      << setw(20) << "Net Pay:"
+                      << setw(20) << "Hours:"
+                      << setw(20) << "Error Message:"
+                      << endl;
 }
